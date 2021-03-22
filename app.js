@@ -9,6 +9,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Endpoints registration
-//require('./routes')(app);
+require('./routes')(app);
 
 module.exports = app;
