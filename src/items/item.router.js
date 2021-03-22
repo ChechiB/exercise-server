@@ -4,6 +4,7 @@ const router = express.Router();
 module.exports = router;
 
 const ctrl = require('./item.controller');
+const { searchSchema, paramSchema } = require('./item.validation')
 
-router.get('/', ctrl.getItem);
-router.get('/:id', ctrl.search);
+router.get('/', ctrl.validateParams({schema: searchSchema}), ctrl.search);
+router.get('/:id', ctrl.validateParams({schema: paramSchema}), ctrl.getItem);
