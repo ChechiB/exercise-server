@@ -9,7 +9,6 @@ const logger = require('winston');
 /**
   * Get port from environment and store in Express.
  */
-console.log(config.get('port'));
 const port = normalizePort(config.get('port') || '3000');
 
 /**

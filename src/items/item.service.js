@@ -10,8 +10,10 @@ async function get(id){
     const [ item, desc ] = await Promise.all([
         axios.get(`https://api.mercadolibre.com/items/${id}`),
         axios.get(`https://api.mercadolibre.com/items/${id}/description`)
-    ]) 
+    ]);
     
+    const category = item.data.category_id;
+    const breadcrumb = await axios.get(`https://api.mercadolibre.com/categories/${category}`);
     const resp = {
         author: {
             name: "Yesi",
@@ -29,7 +31,8 @@ async function get(id){
                 condition: item.data.condition,
                 free_shipping: item.data.shipping.free_shipping,
                 sold_quantity: item.data.sold_quantity,
-                description: desc.data.plain_text
+                description: desc.data.plain_text,
+                breadcrumb: breadcrumb.data.path_from_root,
             }
     }
     return resp;
@@ -42,6 +45,8 @@ async function list(search){
         });
 
     const results = resp.data.results;
+    const category = results[0].category_id;
+    const breadcrumb = await axios.get(`https://api.mercadolibre.com/categories/${category}`);
 
     const items = [];    
     results.forEach(result => {
@@ -60,7 +65,7 @@ async function list(search){
         items.push(item);
     });
 
-    const categories = results.map(item => item.category_id);
+    const categories = breadcrumb.data.path_from_root;
     const author = {
         name: "Yesica",
         lastname: "Barroso"
