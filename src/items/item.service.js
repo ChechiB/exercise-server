@@ -45,7 +45,7 @@ async function list(search){
         {
             params: { limit: 4}
         });
-
+    
     const results = resp.data.results;
     // @@ TODO: add error handler for resp
     const category = results[0].category_id;
@@ -59,7 +59,7 @@ async function list(search){
             price: {
                 currency: result.currency_id,
                 amount: Math.trunc(result.price),
-                decimals: result.price,
+                decimals: getDecimals(result.price),
             },
             picture: result.thumbnail,
             condition: result.condition,
