@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const regexId = new RegExp(/^(MLA[0-9]+)$/);
 
 const searchSchema = Joi.object().keys({
     query: {
@@ -8,7 +9,7 @@ const searchSchema = Joi.object().keys({
 
 const paramSchema = Joi.object().keys({
     params: {
-        id: Joi.string().required(),
+        id: Joi.string().regex(regexId).required(),
     },
 }).unknown(true);
 

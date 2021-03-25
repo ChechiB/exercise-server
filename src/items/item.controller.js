@@ -12,11 +12,9 @@ async function getItem(req, res, next){
     try {
         const id = req.params.id;
         const resp = await itemService.get(id);
-
         return res.status(200).json(resp);
     } catch (e) {
-        return next(Boom.boomify(e));
-    }
+        next(Boom.boomify(e));    }
 }
 
 async function search(req, res, next){
@@ -38,7 +36,7 @@ function validateParams({schema}) {
             const errorList = validationMessage(details);
             return res.status(400).json({ msg: `Invalid request: ${errorList} fields are invalid.`});
         }
-
         return next();
     };
 }
+
