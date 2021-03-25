@@ -1,7 +1,7 @@
-function countDecimals(number){
+function getDecimals(number){
     const decimals = (number + '').split('.');
     if (decimals[1] !== undefined) {
-        return decimals[1].length;
+        return decimals[1];
     } else {
         return 0;
     }
@@ -16,6 +16,6 @@ function validationMessage(data) {
 };
 
 module.exports = {
-    countDecimals,
+    getDecimals,
     validationMessage
 };

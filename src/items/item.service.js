@@ -4,17 +4,18 @@ module.exports = {
 }
 
 const axios = require('axios');
-const { countDecimals } = require('../utils/utils');
+const { getDecimals } = require('../utils/utils');
 
 async function get(id){
+    let resp = {};
     const [ item, desc ] = await Promise.all([
         axios.get(`https://api.mercadolibre.com/items/${id}`),
         axios.get(`https://api.mercadolibre.com/items/${id}/description`)
-    ]);
-    
+    ])
+
     const category = item.data.category_id;
     const breadcrumb = await axios.get(`https://api.mercadolibre.com/categories/${category}`);
-    const resp = {
+    resp = {
         author: {
             name: "Yesi",
             lastname: "Barroso"
@@ -25,7 +26,7 @@ async function get(id){
                 price: {
                     currency: item.data.currency_id,
                     amount: Math.trunc(item.data.price),
-                    decimals: countDecimals(item.data.price),
+                    decimals: getDecimals(item.data.price),
                 },
                 picture: item.data.thumbnail,
                 condition: item.data.condition,
@@ -35,7 +36,8 @@ async function get(id){
                 breadcrumb: breadcrumb.data.path_from_root,
             }
     }
-    return resp;
+    return resp;    
+
 }
 
 async function list(search){
@@ -45,6 +47,7 @@ async function list(search){
         });
 
     const results = resp.data.results;
+    // @@ TODO: add error handler for resp
     const category = results[0].category_id;
     const breadcrumb = await axios.get(`https://api.mercadolibre.com/categories/${category}`);
 
