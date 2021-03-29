@@ -1,8 +1,8 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.validationMessage = exports.getDecimals = void 0;
-var getDecimals = function (number) {
-    var decimals = (number + '').split('.');
+const getDecimals = (number) => {
+    const decimals = (number + '').split('.');
     if (decimals[1] !== undefined) {
         return Number(decimals[1]);
     }
@@ -11,11 +11,12 @@ var getDecimals = function (number) {
     }
 };
 exports.getDecimals = getDecimals;
-var validationMessage = function (data) {
-    var fields = [];
-    data.forEach(function (element) {
+const validationMessage = (data) => {
+    let fields = [];
+    data.forEach(element => {
         fields.push(element.path[element.path.length - 1]);
     });
     return fields;
 };
 exports.validationMessage = validationMessage;
+//# sourceMappingURL=utils.js.map

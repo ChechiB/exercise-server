@@ -1,23 +1,38 @@
-class ErrorHandler extends Error {
-    constructor(statusCode, message) {
-        super();
-        this.statusCode = statusCode;
-        this.message = message;
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+exports.__esModule = true;
+exports.handlerError = exports.HttpException = void 0;
+var HttpException = /** @class */ (function (_super) {
+    __extends(HttpException, _super);
+    function HttpException(statusCode, message) {
+        var _this = _super.call(this) || this;
+        _this.statusCode = statusCode;
+        _this.message = message;
+        return _this;
     }
-}
-
-const handleError = (err, res) => {
-    const { statusCode, message } = err;
-    console.log('const', statusCode, message);
-    res.status(statusCode).json({
+    return HttpException;
+}(Error));
+exports.HttpException = HttpException;
+var handlerError = function (err, res) {
+    var statusCode = err.statusCode, message = err.message;
+    return res.status(statusCode).json({
         status: "error",
-        statusCode,
-        message
+        statusCode: statusCode,
+        message: message
     });
 };
-
-module.exports = {
-    ErrorHandler,
-    handleError
-}
-
+exports.handlerError = handlerError;

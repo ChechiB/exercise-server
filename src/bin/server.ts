@@ -1,15 +1,12 @@
+import * as dotenv from 'dotenv';
+import app = require('../../app');
+import http = require('http');
+import logger = require('winston');
+dotenv.config();
 /**
- * Module dependencies.
+ * Get port from environment and store in Express.
  */
-const app = require('../app');
-const http = require('http');
-const config = require('config');
-const logger = require('winston');
-
-/**
-  * Get port from environment and store in Express.
- */
-const port = normalizePort(config.get('port') || '3000');
+const port = normalizePort(process.env.SERVER_PORT || '3000');
 
 /**
  * Create HTTP server.
@@ -26,7 +23,7 @@ server.on('listening', onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
-function normalizePort(val) {
+export function normalizePort(val) {
     const _port = parseInt(val, 10);
 
     if (isNaN(_port)) {
@@ -45,7 +42,7 @@ function normalizePort(val) {
 /**
  * Event listener for HTTP server "error" event.
  */
-function onError(error) {
+export function onError(error) {
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -72,7 +69,7 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-function onListening() {
+export function onListening() {
     const addr = server.address();
     const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     logger.info('Listening on ' + bind);
