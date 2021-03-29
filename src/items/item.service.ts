@@ -63,7 +63,7 @@ export async function list(search){
     }
 
     const results = resp.data.results;
-    if (results){
+    if (!results.length){
         return {
             author: author,
             categories: [],
@@ -100,6 +100,6 @@ export async function list(search){
         categories: categories,
         items: items
     }
-
+    
     return resultSearch;
 }
